@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import os.path
 import sys
 
 import salt.config
@@ -19,6 +20,11 @@ def main():
         sys.exit(1)
 
     jid = sys.argv[1]
+    print 'using master config file: %s' % CONFIG
+    if not os.path.isfile(CONFIG):
+        print 'cannot find master config file: %s' % CONFIG
+        sys.exit(1)
+
     __opts__ = salt.config.master_config(CONFIG)
     runner = salt.runner.Runner(__opts__)
 
